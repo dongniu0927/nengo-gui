@@ -510,8 +510,16 @@ class Page(object):
                     self.error = dict(trace=traceback.format_exc(), line=line)
                     self.sim = None
             while self.sims_to_close:
-                self.sims_to_close.pop().close()
+                s = self.sims_to_close.pop()
+                if 'on_close' in self.locals:
+                    self.locals['on_close'](s)
+                s.close()
 
             if self.rebuild:
                 self.build()
         self.sim = None
+
+    def close(self):
+        if self.sim is not None:
+            if 'on_close' in self.locals:
+                self.locals['on_close'](self.sim)
