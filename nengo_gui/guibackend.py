@@ -19,6 +19,8 @@ except ImportError:  # for Python without ssl support
     from . import nossl as ssl
 import time
 
+from cookies import Cookie
+
 import nengo_gui
 from nengo_gui.completion import get_completions
 import nengo_gui.exec_env
@@ -317,7 +319,7 @@ class GuiRequestHandler(server.HttpWsRequestHandler):
             peer_name = None
 
         try:
-            session_id = self.cookie['_session_id'].value
+            session_id = self.request_cookies['_session_id'].value
             session = self.server.sessions[session_id]
             if session.peer_name != peer_name:
                 logger.warning(
@@ -330,12 +332,11 @@ class GuiRequestHandler(server.HttpWsRequestHandler):
 
     def persist_session(self, session):
         session_id = self.server.sessions.add_session(self.request, session)
-        self.cookie['_session_id'] = session_id
-        self.cookie['_session_id']['path'] = self.server.settings.prefix
-        self.cookie['_session_id']['httponly'] = True
-        self.cookie['_session_id']['max-age'] = (
-            self.server.settings.session_duration)
-        self.cookie['_session_id']['version'] = 1
+        self.response_cookies.add(Cookie(
+            name='_session_id', value=session_id,
+            path=self.server.settings.prefix + '/',
+            httponly=True, version=1,
+            max_age=self.server.settings.session_duration))
 
     def log_message(self, format, *args):
         logger.info(format, *args)
