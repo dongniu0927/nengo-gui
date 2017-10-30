@@ -326,8 +326,6 @@ class ManagedThreadHttpServer(
 
         for ws in self.websockets:
             ws.close()
-        for _, request in self.requests:
-            self.shutdown_request(request)
 
         DualStackHttpServer.shutdown(self)
 
@@ -413,7 +411,8 @@ class HttpWsRequestHandler(server.BaseHTTPRequestHandler):
             response = self.http_default()
         else:
             response = getattr(self, command)()
-        response.send(self)
+        if response is not None:
+            response.send(self)
 
     def http_default(self):
         raise InvalidResource(self.path)
