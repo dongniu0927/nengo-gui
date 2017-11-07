@@ -39,7 +39,8 @@ def main():
         '-b', '--backend', metavar='BACKEND',
         default='nengo', type=str, help='default backend to use')
     parser.add_argument('--browser', dest='browser', type=str,
-        metavar='BROWSER', default=True, help='browser to use')
+        metavar='BROWSER', default=True,
+        help='browser to use (e.g. chrome, firefox)')
     parser.add_argument('--no-browser', dest='browser', action='store_false')
     parser.add_argument(
         '--auto-shutdown', nargs=1, type=float,
