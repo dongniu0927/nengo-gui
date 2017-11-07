@@ -106,7 +106,12 @@ def main():
             if args.browser is True:
                 wb = webbrowser.get()
             else:
-                wb = webbrowser.get(args.browser)
+                try:
+                    wb = webbrowser.get(args.browser)
+                except webbrowser.Error:
+                    print('Known browsers: \n  %s' % 
+                          '\n  '.join(webbrowser._browsers.keys()))
+                    raise
             t = threading.Thread(
                 target=wb.open,
                 args=('%s//%s:%d' % (protocol, host, port),))
