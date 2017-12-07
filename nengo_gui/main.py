@@ -109,8 +109,11 @@ def main():
                 try:
                     wb = webbrowser.get(args.browser)
                 except webbrowser.Error:
-                    print('Known browsers: \n  %s' % 
-                          '\n  '.join(webbrowser._browsers.keys()))
+                    try:
+                        print('Known browsers: \n  %s' % 
+                              '\n  '.join(webbrowser._tryorder))
+                    except:
+                        print('Could not determine the list of known browsers.')
                     raise
             t = threading.Thread(
                 target=wb.open,
