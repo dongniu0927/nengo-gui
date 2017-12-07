@@ -18,6 +18,12 @@ def old_main():
 
 
 def main():
+    try:
+        browser_help = ('browser to use (options: "%s")' % 
+                        '", "'.join(webbrowser._tryorder))
+    except:
+        browser_help='browser to use (e.g. chrome, firefox)'
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-p', '--password', dest='password', metavar='PASS',
@@ -40,7 +46,7 @@ def main():
         default='nengo', type=str, help='default backend to use')
     parser.add_argument('--browser', dest='browser', type=str,
         metavar='BROWSER', default=True,
-        help='browser to use (e.g. chrome, firefox)')
+        help=browser_help)
     parser.add_argument('--no-browser', dest='browser', action='store_false')
     parser.add_argument(
         '--auto-shutdown', nargs=1, type=float,
