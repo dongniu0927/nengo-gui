@@ -21,7 +21,7 @@ def main():
     try:
         browser_help = ('browser to use (options: "%s")' % 
                         '", "'.join(webbrowser._tryorder))
-    except:
+    except (AttributeError, TypeError):
         # just in case the undocumented webbrowser._tryorder changes
         browser_help='browser to use (e.g. chrome, firefox)'
 
@@ -119,7 +119,7 @@ def main():
                     try:
                         print('Known browsers: \n  %s' % 
                               '\n  '.join(webbrowser._tryorder))
-                    except:
+                    except (AttributeError, TypeError):
                         # just in case the undocumented webbrowser._tryorder
                         #  changes
                         print('Could not determine the list of known browsers.')
