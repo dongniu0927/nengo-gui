@@ -22,6 +22,7 @@ def main():
         browser_help = ('browser to use (options: "%s")' % 
                         '", "'.join(webbrowser._tryorder))
     except:
+        # just in case the undocumented webbrowser._tryorder changes
         browser_help='browser to use (e.g. chrome, firefox)'
 
     parser = argparse.ArgumentParser()
@@ -119,6 +120,8 @@ def main():
                         print('Known browsers: \n  %s' % 
                               '\n  '.join(webbrowser._tryorder))
                     except:
+                        # just in case the undocumented webbrowser._tryorder
+                        #  changes
                         print('Could not determine the list of known browsers.')
                     raise
             t = threading.Thread(
