@@ -465,7 +465,8 @@ class Page(object):
             # build the simulation
             try:
                 with exec_env:
-                    self.sim = backend.Simulator(self.model)
+                    self.sim = backend.Simulator(
+                        self.model, progress_bar=False)
             except:
                 line = nengo_gui.exec_env.determine_line_number()
                 self.error = dict(trace=traceback.format_exc(), line=line)
