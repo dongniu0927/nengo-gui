@@ -156,7 +156,6 @@ class DualStackHttpServer(object):
 
             host, port = self.address[:2]
             self.name = socket.getfqdn(host)
-            self.port = port
 
         def activate(self):
             self.socket.listen(self.request_queue_size)
