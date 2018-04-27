@@ -77,22 +77,29 @@ Nengo.Hotkeys = function () {
                 ev.preventDefault();
             }
             
-            Nengo.netgraph.ws.send(JSON.stringify(
-                {event:'keydown', 
-                 keyCode:ev.keyCode, 
-                 key:key
-                }));
+	    if (!is_editable) {
+	        Nengo.netgraph.ws.send(JSON.stringify(
+		    {event:'keydown', 
+		     keyCode:ev.keyCode, 
+		     key:key
+		    }));
+            }
         }
     });
     
     document.addEventListener('keyup', function(ev) {
         if (self.active) {
             
-            Nengo.netgraph.ws.send(JSON.stringify(
-                {event:'keyup', 
-                 keyCode:ev.keyCode, 
-                 key:self.determine_key(ev)
-                }));
+            var is_editable = (ev.target.tagName === 'INPUT' ||
+                ev.target.tagName == 'TEXTAREA');
+
+	    if (!is_editable) {
+                Nengo.netgraph.ws.send(JSON.stringify(
+                    {event:'keyup', 
+                     keyCode:ev.keyCode, 
+                     key:self.determine_key(ev)
+                    }));
+            }
         }
     });
     
