@@ -698,5 +698,3 @@ class NetGraph(Component):
         elif event == 'keydown':
             self.page.keys_pressed.add(info['key'])
             self.page.key_codes_pressed.add(info['keyCode'])
-
-        print(self.page.keys_pressed)
