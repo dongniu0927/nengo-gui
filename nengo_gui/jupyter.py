@@ -59,7 +59,7 @@ class InlineGUI(object):
     @classmethod
     def start_server(cls, cfg, model):
         if not cls.shutdown_hook_registered:
-            atexit.register(IPythonViz.shutdown_all, timeout=5)
+            atexit.register(InlineGUI.shutdown_all, timeout=5)
             cls.shutdown_hook_registered = True
 
         # Make sure only one server is writing the same config.
