@@ -33,7 +33,7 @@ class ConfigReuseWarning(UserWarning):
     pass
 
 
-class IPythonViz(object):
+class InlineGUI(object):
     shutdown_hook_registered = False
 
     servers = weakref.WeakValueDictionary()
